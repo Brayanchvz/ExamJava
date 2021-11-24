@@ -1,0 +1,22 @@
+insert into perfil values(1,'Admin','1');
+insert into perfil values(2,'Docente','1');
+insert into perfil values(3,'Estudiante','1');
+
+insert into docente values(1,'D001',2,'1');
+insert into docente values(2,'D002',2,'1');
+insert into docente values(3,'D003',2,'1');
+
+insert into grado values(1,'Primero','1');
+insert into grado values(2,'Segundo','1');
+insert into grado values(3,'Tercero','1');
+insert into grado values(4,'Cuarto','1');
+insert into grado values(5,'Quinto','1');
+
+insert into seccion values(1,'Seccion A',5,'1');
+insert into seccion values(2,'Seccion B',5,'1');
+insert into seccion values(3,'Seccion C',5,'1');
+insert into seccion values(4,'Seccion D',5,'1');
+
+insert into curso values(1,'Matematica 5',1,1,5,'1');
+insert into curso values(2,'Historia 5',2,1,5,'1');
+insert into curso values(3,'Quimica 5',3,1,5,'1');

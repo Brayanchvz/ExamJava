@@ -1,0 +1,173 @@
+DROP TABLE IF EXISTS alumno;
+CREATE TABLE `alumno` (
+`i_al_id` int NOT NULL AUTO_INCREMENT,
+`c_codigo` varchar(11) DEFAULT NULL,
+`i_perfil_id` int DEFAULT NULL,
+`c_estado` char(1) DEFAULT NULL,
+`i_seccion_id` int DEFAULT NULL,
+
+PRIMARY KEY (`i_al_id`),
+#UNIQUE KEY `Perfil_un` (`i_perfil_id`),
+#UNIQUE KEY `Seccion_un` (`i_seccion_id`),
+CONSTRAINT `perfil_FK1` FOREIGN KEY (`i_perfil_id`) REFERENCES `perfil` (`i_perfil_id`),
+CONSTRAINT `Seccion_FK1` FOREIGN KEY (`i_seccion_id`) REFERENCES `seccion` (`i_seccion_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS alumno_examen;
+CREATE TABLE `alumno_examen` (
+`i_al_ex_id` int NOT NULL AUTO_INCREMENT,
+`i_al_id` int DEFAULT NULL,
+`i_examen_id` int DEFAULT NULL,
+`d_fecha` date DEFAULT NULL,
+`i_nota` int DEFAULT NULL,
+`c_estado` char(1) DEFAULT NULL,
+PRIMARY KEY (`i_al_ex_id`),
+#UNIQUE KEY `AlumnoAE_un` (`i_al_id`),
+#UNIQUE KEY `ExamenAE_un` (`i_examen_id`),
+CONSTRAINT `AlumnoEA_FK1` FOREIGN KEY (`i_al_id`) REFERENCES `alumno` (`i_al_id`),
+CONSTRAINT `ExamenEA_FK1` FOREIGN KEY (`i_examen_id`) REFERENCES `examen` (`i_examen_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS alumno_examen_respuesta;
+CREATE TABLE `alumno_examen_respuesta` (
+`i_al_ex_res_id` int NOT NULL AUTO_INCREMENT,
+`i_al_ex_id` int DEFAULT NULL,
+`i_respuesta_id` int DEFAULT NULL,
+`c_respuesta_id` char(1) DEFAULT NULL,
+`i_puntuaje` int DEFAULT NULL,
+`c_estado` char(1) DEFAULT NULL,
+PRIMARY KEY (`i_al_ex_res_id`),
+#UNIQUE KEY `AlumnoAER_un` (`i_al_ex_id`),
+#UNIQUE KEY `ExamenAER_un` (`i_respuesta_id`),
+CONSTRAINT `AlumnoEAR_FK1` FOREIGN KEY (`i_al_ex_id`) REFERENCES `alumno_examen` (`i_al_ex_id`),
+CONSTRAINT `ExamenEAR_FK1` FOREIGN KEY (`i_respuesta_id`) REFERENCES `respuesta` (`i_respuesta_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS curso;
+CREATE TABLE `curso` (
+`i_curso_id` int NOT NULL AUTO_INCREMENT,
+`c_descripcion` varchar(11) DEFAULT NULL,
+`i_doc_id` int DEFAULT NULL,
+`i_seccion_id` int DEFAULT NULL,
+`i_grado_id` int DEFAULT NULL,
+`c_estado` char(1) DEFAULT NULL,
+PRIMARY KEY (`i_curso_id`),
+#UNIQUE KEY `Docente_un` (`i_doc_id`),
+#UNIQUE KEY `Seccion_un` (`i_seccion_id`),
+#UNIQUE KEY `Grado_un` (`i_grado_id`),
+CONSTRAINT `Docente_FK1` FOREIGN KEY (`i_doc_id`) REFERENCES `docente` (`i_doc_id`),
+CONSTRAINT `Grado2_FK1` FOREIGN KEY (`i_grado_id`) REFERENCES `grado` (`i_grado_id`),
+CONSTRAINT `Seccion2_FK1` FOREIGN KEY (`i_seccion_id`) REFERENCES `seccion` (`i_seccion_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS docente;
+CREATE TABLE `docente` (
+`i_doc_id` int NOT NULL AUTO_INCREMENT,
+`c_codigo` varchar(11) DEFAULT NULL,
+`i_perfil_id` int DEFAULT NULL,
+`c_estado` char(1) DEFAULT NULL,
+PRIMARY KEY (`i_doc_id`),
+#UNIQUE KEY `Perfil_un` (`i_perfil_id`),
+CONSTRAINT `perfil_FK2` FOREIGN KEY (`i_perfil_id`) REFERENCES `perfil` (`i_perfil_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS examen;
+CREATE TABLE `examen` (
+`i_examen_id` int NOT NULL AUTO_INCREMENT,
+`c_descripcion` varchar(11) DEFAULT NULL,
+`d_fecha_create` date DEFAULT NULL,
+`d_fecha_start` date DEFAULT NULL,
+`i_curso_id` int DEFAULT NULL,
+`c_estado` char(1) DEFAULT NULL,
+PRIMARY KEY (`i_examen_id`),
+#UNIQUE KEY `CursoE_un` (`i_curso_id`),
+CONSTRAINT `CursoE_FK1` FOREIGN KEY (`i_curso_id`) REFERENCES `curso` (`i_curso_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS grado;
+CREATE TABLE `grado` (
+`i_grado_id` int NOT NULL AUTO_INCREMENT,
+`c_descripcion` varchar(11) DEFAULT NULL,
+`c_estado` char(1) DEFAULT NULL,
+PRIMARY KEY (`i_grado_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS perfil;
+CREATE TABLE `perfil` (
+`i_perfil_id` int NOT NULL AUTO_INCREMENT,
+`c_descripcion` varchar(11) DEFAULT NULL,
+`c_estado` char(1) DEFAULT NULL,
+PRIMARY KEY (`i_perfil_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS persona;
+CREATE TABLE `persona` (
+`i_per_id` int NOT NULL AUTO_INCREMENT,
+`c_dni` varchar(8) DEFAULT NULL,
+`c_nombres` varchar(100) DEFAULT NULL,
+`c_correo` varchar(100) DEFAULT NULL,
+`c_telefono` varchar(9) DEFAULT NULL,
+`c_direccion` varchar(100) DEFAULT NULL,
+PRIMARY KEY (`i_per_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS pregunta;
+CREATE TABLE `pregunta` (
+`i_pregunta_id` int NOT NULL AUTO_INCREMENT,
+`c_descripcion` varchar(11) DEFAULT NULL,
+`i_puntuaje` int DEFAULT NULL,
+`i_examen_id` int DEFAULT NULL,
+`c_estado` char(1) DEFAULT NULL,
+PRIMARY KEY (`i_pregunta_id`),
+#UNIQUE KEY `ExamenP_un` (`i_examen_id`),
+CONSTRAINT `ExamenP_FK1` FOREIGN KEY (`i_examen_id`) REFERENCES `examen` (`i_examen_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS respuesta;
+CREATE TABLE `respuesta` (
+`i_respuesta_id` int NOT NULL AUTO_INCREMENT,
+`c_descripcion` varchar(11) DEFAULT NULL,
+`c_respuesta` char(1) DEFAULT NULL,
+`i_pregunta_id` int DEFAULT NULL,
+`c_estado` char(1) DEFAULT NULL,
+PRIMARY KEY (`i_respuesta_id`),
+#UNIQUE KEY `PreguntaR_un` (`i_pregunta_id`),
+CONSTRAINT `PreguntaR_FK1` FOREIGN KEY (`i_pregunta_id`) REFERENCES `pregunta` (`i_pregunta_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS seccion;
+CREATE TABLE `seccion` (
+`i_seccion_id` int NOT NULL AUTO_INCREMENT,
+`c_descripcion` varchar(11) DEFAULT NULL,
+`i_grado_id` int DEFAULT NULL,
+`c_estado` char(1) DEFAULT NULL,
+PRIMARY KEY (`i_seccion_id`),
+#UNIQUE KEY `Grado_un` (`i_grado_id`),
+CONSTRAINT `Grado_FK1` FOREIGN KEY (`i_grado_id`) REFERENCES `grado` (`i_grado_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+DROP TABLE IF EXISTS usuario;
+CREATE TABLE `usuario` (
+`i_us_id` int NOT NULL AUTO_INCREMENT,
+`c_usuario` varchar(11) DEFAULT NULL,
+`c_password` varchar(11) DEFAULT NULL,
+`i_per_id` int DEFAULT NULL,
+`i_perfil_id` int DEFAULT NULL,
+`c_estado` char(1) DEFAULT NULL,
+PRIMARY KEY (`i_us_id`),
+#UNIQUE KEY `persona_un` (`i_per_id`),
+#UNIQUE KEY `pefil_un` (`i_perfil_id`),
+CONSTRAINT `persona_FK` FOREIGN KEY (`i_per_id`) REFERENCES `persona` (`i_per_id`),
+CONSTRAINT `perfil_FK` FOREIGN KEY (`i_perfil_id`) REFERENCES `perfil` (`i_perfil_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
